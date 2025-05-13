@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artist Cost Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .dark-mode {
+            background-color: #121212;
+        }
+        .dark-mode .bg-white {
+            background-color: #242424;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-800">
+<div class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold text-red-600 dark:text-red-400">Artist Cost Calculator</h1>
+        <button id="darkModeToggle" title="Toggle Dark Mode"
+                class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-red-800 dark:text-red-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <i class="fas fa-sun dark:fas fa-moon"></i>
+        </button>
+    </div>
+    <form method="post" class="space-y-4">
+        {{ form.hidden_tag() }}
+
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                {{ form.artist_name.label }}
+            </label>
+            {{ form.artist_name(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline") }}
+            {% if form.artist_name.errors %}
+                <ul class="text-red-500">
+                    {% for error in form.artist_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                {{ form.skill_level.label }}
+            </label>
+            {{ form.skill_level(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline") }}
+            {% if form.skill_level.errors %}
+                <ul class="text-red-500">
+                    {% for error in form.skill_level.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                {{ form.class_level.label }}
+            </label>
+            {{ form.class_level(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline") }}
+            {% if form.class_level.errors %}
+                <ul class="text-red-500">
+                    {% for error in form.class_level.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                {{ form.number_of_exhibitions.label }}
+            </label>
+            {{ form.number_of_exhibitions(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline") }}
+            {% if form.number_of_exhibitions.errors %}
+                <ul class="text-red-500">
+                    {% for error in form.number_of_exhibitions.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                Coaching Hours per Week (Max 5 hours/week)
+            </label>
+            {% for subform in form.coaching_hours %}
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 text-red-600 dark:text-red-400">
+                        Week {{ loop.index }}
+                    </label>
+                    {{ subform.hours(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline") }}
+                    {% if subform.errors %}
+                        <ul class="text-red-500">
+                            {% for error in subform.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-red-600 dark:text-red-400" type="submit">
+            Calculate
+        </button>
+    </form>
+</div>
+
+<script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+    });
+</script>
+</body>
+</html>
